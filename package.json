@@ -19,7 +19,10 @@
   "scripts": {
     "dev": "vite build --watch",
     "build": "vue-tsc --noEmit && vite build",
-    "typecheck": "vue-tsc --noEmit"
+    "typecheck": "vue-tsc --noEmit",
+    "release:patch": "npm version patch && npm run build && npm publish && git push --follow-tags",
+    "release:minor": "npm version minor && npm run build && npm publish && git push --follow-tags",
+    "release:major": "npm version major && npm run build && npm publish && git push --follow-tags"
   },
   "keywords": [
     "vue",
