@@ -1,8 +1,8 @@
 # cetera-vue-utils
 
-Vue 3 components, composables and utilities.
+Компоненты, composables и утилиты для Vue 3.
 
-## Installation
+## Установка
 
 ```bash
 npm install cetera-vue-utils
@@ -12,39 +12,39 @@ npm install cetera-vue-utils
 
 ### useNotify
 
-Global notification system with auto-dismiss.
+Глобальная система уведомлений с автоматическим скрытием.
 
 ```ts
 import { useNotify } from 'cetera-vue-utils'
 
 const notify = useNotify()
 
-notify.success('Saved!')
-notify.error('Something went wrong')
-notify.warn('Check your input')
-notify.info('New update available')
+notify.success('Сохранено!')
+notify.error('Что-то пошло не так')
+notify.warn('Проверьте введённые данные')
+notify.info('Доступно обновление')
 
-// Custom lifetime (ms)
-notify.add('info', 'Custom message', 5000)
+// Произвольное время показа (мс)
+notify.add('info', 'Произвольное сообщение', 5000)
 ```
 
-| Method | Type | Lifetime |
+| Метод | Тип | Время показа |
 |---|---|---|
-| `success(message)` | `success` | 3000ms |
-| `info(message)` | `info` | 3000ms |
-| `warn(message)` | `warn` | 4000ms |
-| `error(message)` | `error` | 5000ms |
-| `add(type, message, life)` | any | custom |
+| `success(message)` | `success` | 3000мс |
+| `info(message)` | `info` | 3000мс |
+| `warn(message)` | `warn` | 4000мс |
+| `error(message)` | `error` | 5000мс |
+| `add(type, message, life)` | любой | произвольное |
 
-The `notifications` ref is shared across all calls to `useNotify()` — you can read it anywhere.
+Ref `notifications` общий для всех вызовов `useNotify()` — его можно читать в любом месте приложения.
 
-## Components
+## Компоненты
 
 ### Notifications
 
-Renders active notifications. Place it once in the root layout.
+Отображает активные уведомления. Разместите один раз в корневом layout.
 
-Styled with Tailwind CSS classes — requires Tailwind to be configured in your project.
+Стилизован через классы Tailwind CSS — требует подключённого Tailwind в проекте.
 
 ```vue
 <script setup>
@@ -55,15 +55,15 @@ const notify = useNotify()
 
 <template>
   <Notifications />
-  <button @click="notify.success('Done!')">Save</button>
+  <button @click="notify.success('Готово!')">Сохранить</button>
 </template>
 ```
 
-Notifications appear in the bottom-right corner with enter/leave transitions.
+Уведомления появляются в правом нижнем углу с анимацией появления и исчезновения.
 
 ## TypeScript
 
-All exports are fully typed. The `Notification` interface is available:
+Все экспорты полностью типизированы. Интерфейс `Notification` доступен для импорта:
 
 ```ts
 import type { Notification } from 'cetera-vue-utils'
@@ -77,6 +77,6 @@ interface Notification {
 }
 ```
 
-## License
+## Лицензия
 
 MIT
