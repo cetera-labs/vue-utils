@@ -26,6 +26,7 @@
   </div>
 
   <Notifications />
+
 </template>
 
 <script setup lang="ts">

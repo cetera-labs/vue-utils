@@ -18,11 +18,13 @@ export default defineConfig({
       fileName: 'cetera-vue-utils',
     },
     rollupOptions: {
-      external: ['vue', 'axios'],
+      external: ['vue', 'axios', 'primevue', 'uuid'],
       output: {
         globals: {
           vue: 'Vue',
           axios: 'axios',
+          primevue: 'primevue',
+          uuid: 'uuid',
         },
       },
     },
