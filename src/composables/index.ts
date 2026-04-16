@@ -1,5 +1,3 @@
-// Export composables here
-// Example: export { useMyComposable } from './useMyComposable'
-
-export {}
+export { useNotify } from './useNotify'
+export type { Notification } from './useNotify'
 
