@@ -18,10 +18,11 @@ export default defineConfig({
       fileName: 'cetera-vue-utils',
     },
     rollupOptions: {
-      external: ['vue'],
+      external: ['vue', 'axios'],
       output: {
         globals: {
           vue: 'Vue',
+          axios: 'axios',
         },
       },
     },
