@@ -1,0 +1,42 @@
+{
+  "name": "cetera-vue-utils",
+  "version": "0.1.0",
+  "description": "Vue 3 components, composables and utilities",
+  "type": "module",
+  "main": "./dist/cetera-vue-utils.umd.cjs",
+  "module": "./dist/cetera-vue-utils.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/cetera-vue-utils.js",
+      "require": "./dist/cetera-vue-utils.umd.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vue-tsc --noEmit && vite build",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "keywords": [
+    "vue",
+    "vue3",
+    "components",
+    "composables",
+    "utils"
+  ],
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.0",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0",
+    "vite-plugin-dts": "^3.0.0",
+    "vue": "^3.4.0",
+    "vue-tsc": "^2.0.0"
+  }
+}
