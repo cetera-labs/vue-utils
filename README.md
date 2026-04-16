@@ -8,10 +8,10 @@
 npm install cetera-vue-utils
 ```
 
-Пакет требует наличия peer dependencies:
+Пакет требует наличия peer dependency:
 
 ```bash
-npm install vue axios
+npm install vue
 ```
 
 ## Composables
@@ -67,14 +67,14 @@ const notify = useNotify()
 
 Уведомления появляются в правом нижнем углу с анимацией появления и исчезновения.
 
-### useHttp
+### useHttpClient
 
 HTTP-клиент на основе axios с автоматическими уведомлениями об ошибках и поддержкой отмены запросов.
 
 ```ts
-import { useHttp } from 'cetera-vue-utils'
+import { useHttpClient } from 'cetera-vue-utils'
 
-const http = useHttp({
+const http = useHttpClient({
     baseURL: 'https://api.example.com',
     onUnauthorized: () => router.push('/login'),
 })
@@ -112,12 +112,74 @@ await http.download('/reports/export.xlsx')
 - `403` — показывает `notify.error("Действие недоступно!")`
 - `419` — показывает `notify.error` о протухшей сессии
 
+### useErrors
+
+Управление ошибками валидации формы.
+
+```ts
+import { useErrors } from 'cetera-vue-utils'
+
+const errors = useErrors()
+
+// Записать ошибки из ответа сервера
+errors.record(response.errors)
+
+// Проверить наличие ошибки поля
+errors.has('email')       // true / false
+
+// Получить текст ошибки поля
+errors.get('email')       // "Email обязателен"
+
+// Есть ли хоть одна ошибка
+errors.any()              // true / false
+
+// Установить одну ошибку
+errors.set({ path: 'email', value: 'Неверный формат' })
+
+// Очистить одно поле или все
+errors.clear('email')
+errors.clear()
+```
+
+### useDataLoad
+
+Загрузка данных через `useHttpClient` с управлением состоянием `loading` и `data`.
+
+```ts
+import { useDataLoad, useHttpClient } from 'cetera-vue-utils'
+
+const http = useHttpClient({ baseURL: '/api' })
+
+// Простой случай
+const { data, loading, load } = useDataLoad<User[]>(() => http.get('/users'))
+
+// С параметрами
+const { data, meta, loading, load } = useDataLoad<User[], { page: number }>(
+    (params) => http.get('/users', { params })
+)
+
+// Загрузить
+await load({ page: 1 })
+
+// Загрузить только если данных ещё нет (кэш)
+await load(true)
+await load({ page: 1 }, true)
+
+// Разделить состояние между несколькими вызовами
+const data = ref<User[]>()
+const loading = ref(false)
+const { load: loadUsers } = useDataLoad(() => http.get('/users'), { data, loading })
+const { load: loadMore } = useDataLoad((p) => http.get('/users', { params: p }), { data, loading })
+```
+
+Возвращаемый `meta` содержит `total` — удобно для пагинации.
+
 ## TypeScript
 
 Все экспорты полностью типизированы. Интерфейс `Notification` доступен для импорта:
 
 ```ts
-import type { Notification, HttpResponse, UseHttpOptions } from 'cetera-vue-utils'
+import type { Notification, HttpResponse, UseHttpOptions, ErrorsData } from 'cetera-vue-utils'
 ```
 
 ```ts
