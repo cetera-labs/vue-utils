@@ -1,6 +1,6 @@
 {
   "name": "cetera-vue-utils",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Vue 3 components, composables and utilities",
   "type": "module",
   "main": "./dist/cetera-vue-utils.umd.cjs",
