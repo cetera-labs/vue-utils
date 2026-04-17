@@ -18,12 +18,13 @@ export default defineConfig({
       fileName: 'cetera-vue-utils',
     },
     rollupOptions: {
-      external: ['vue', 'axios', 'primevue', 'uuid'],
+      external: ['vue', 'axios', 'primevue', /^primevue\//, /^@primevue\//, 'uuid'],
       output: {
         globals: {
           vue: 'Vue',
           axios: 'axios',
           primevue: 'primevue',
+          '@primevue/icons/spinner': '_primevue_icons_spinner',
           uuid: 'uuid',
         },
       },

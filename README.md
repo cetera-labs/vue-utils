@@ -67,6 +67,30 @@ const notify = useNotify()
 
 Уведомления появляются в правом нижнем углу с анимацией появления и исчезновения.
 
+### Spinner
+
+Оверлей загрузки поверх контента. Требует `position: relative` на родительском элементе.
+
+```vue
+<template>
+  <div class="relative">
+    <Spinner :isLoading="loading" size="lg" />
+    <p>Контент</p>
+  </div>
+</template>
+
+<script setup>
+import { Spinner } from 'cetera-vue-utils'
+</script>
+```
+
+| Prop | Тип | По умолчанию | Описание |
+|---|---|---|---|
+| `isLoading` | `boolean` | `true` | Показывать спиннер |
+| `size` | `'xs' \| 'sm' \| 'base' \| 'lg' \| 'xl'` | `'xl'` | Размер иконки |
+
+Стилизован через Tailwind CSS. Иконка берётся из `@primevue/icons`.
+
 ### useHttpClient
 
 HTTP-клиент на основе axios с автоматическими уведомлениями об ошибках и поддержкой отмены запросов.
