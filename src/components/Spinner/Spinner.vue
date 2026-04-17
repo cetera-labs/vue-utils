@@ -6,13 +6,7 @@
     >
         <SpinnerIcon
             class="animate-spin inline text-primary dark:text-primary"
-            :class="{
-                'h-4 w-4': size === 'xs',
-                'h-6 w-6': size === 'sm',
-                'h-8 w-8': size === 'base',
-                'h-10 w-10': size === 'lg',
-                'h-14 w-14': size === 'xl',
-            }"
+            :style="{ width: sizeMap[size], height: sizeMap[size] }"
         />
         <span class="sr-only">Загрузка ...</span>
     </div>
@@ -21,7 +15,7 @@
 <script setup lang="ts">
 import SpinnerIcon from "@primevue/icons/spinner"
 
-withDefaults(
+const props = withDefaults(
     defineProps<{
         isLoading?: boolean
         size?: "xs" | "sm" | "base" | "lg" | "xl"
@@ -31,4 +25,12 @@ withDefaults(
         size: "xl",
     }
 )
+
+const sizeMap: Record<NonNullable<typeof props.size>, string> = {
+    xs: '1rem',
+    sm: '1.5rem',
+    base: '2rem',
+    lg: '2.5rem',
+    xl: '3.5rem',
+}
 </script>
