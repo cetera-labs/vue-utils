@@ -1,5 +1,7 @@
 export { default as Notifications } from './Notifications/Notifications.vue'
 export { default as Spinner } from './Spinner/Spinner.vue'
+export { default as InlineLoading } from './InlineLoading/InlineLoading.vue'
+export { default as Dialog } from './Dialog/Dialog.vue'
 export type { SpinnerSize } from './Spinner/types'
 export { default as Input } from './Input/Input.vue'
 export type { InputProps } from './Input/types'

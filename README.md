@@ -14,36 +14,6 @@ npm install cetera-vue-utils
 npm install vue
 ```
 
-## Composables
-
-### useNotify
-
-Глобальная система уведомлений с автоматическим скрытием.
-
-```ts
-import { useNotify } from 'cetera-vue-utils'
-
-const notify = useNotify()
-
-notify.success('Сохранено!')
-notify.error('Что-то пошло не так')
-notify.warn('Проверьте введённые данные')
-notify.info('Доступно обновление')
-
-// Произвольное время показа (мс)
-notify.add('info', 'Произвольное сообщение', 5000)
-```
-
-| Метод | Тип | Время показа |
-|---|---|---|
-| `success(message)` | `success` | 3000мс |
-| `info(message)` | `info` | 3000мс |
-| `warn(message)` | `warn` | 4000мс |
-| `error(message)` | `error` | 5000мс |
-| `add(type, message, life)` | любой | произвольное |
-
-Ref `notifications` общий для всех вызовов `useNotify()` — его можно читать в любом месте приложения.
-
 ## Компоненты
 
 ### Notifications
@@ -89,7 +59,83 @@ import { Spinner } from 'cetera-vue-utils'
 | `isLoading` | `boolean` | `true` | Показывать спиннер |
 | `size` | `'xs' \| 'sm' \| 'base' \| 'lg' \| 'xl'` | `'xl'` | Размер иконки |
 
-Стилизован через Tailwind CSS. Иконка берётся из `@primevue/icons`.
+### InlineLoading
+
+Инлайн-индикатор загрузки с опциональным текстом.
+
+```vue
+<template>
+  <InlineLoading :isLoading="loading" loadingText="Сохранение..." />
+</template>
+
+<script setup>
+import { InlineLoading } from 'cetera-vue-utils'
+</script>
+```
+
+| Prop | Тип | По умолчанию | Описание |
+|---|---|---|---|
+| `isLoading` | `boolean` | `true` | Показывать индикатор |
+| `loadingText` | `string` | `'Загрузка ...'` | Текст рядом с иконкой |
+
+### Input
+
+Обёртка над полем ввода с поддержкой label, ошибок валидации и вспомогательного текста. Использует PrimeVue компоненты.
+
+```vue
+<template>
+  <Input label="Email" v-model="email" :invalidMessage="errors.get('email')" />
+
+  <!-- С кастомным компонентом -->
+  <Input label="Дата" :component="DatePicker" v-model="date" />
+
+  <!-- С helper текстом -->
+  <Input label="Пароль" v-model="password" helperText="Минимум 8 символов" />
+</template>
+
+<script setup>
+import { Input } from 'cetera-vue-utils'
+import { DatePicker } from 'primevue'
+</script>
+```
+
+| Prop | Тип | По умолчанию | Описание |
+|---|---|---|---|
+| `label` | `string` | — | Подпись поля |
+| `component` | `Component` | `InputText` | PrimeVue компонент |
+| `invalidMessage` | `string` | — | Текст ошибки |
+| `helperText` | `string` | — | Вспомогательный текст |
+| `id` | `string` | auto uuid | ID для связи label и input |
+
+## Composables
+
+### useNotify
+
+Глобальная система уведомлений с автоматическим скрытием.
+
+```ts
+import { useNotify } from 'cetera-vue-utils'
+
+const notify = useNotify()
+
+notify.success('Сохранено!')
+notify.error('Что-то пошло не так')
+notify.warn('Проверьте введённые данные')
+notify.info('Доступно обновление')
+
+// Произвольное время показа (мс)
+notify.add('info', 'Произвольное сообщение', 5000)
+```
+
+| Метод | Тип | Время показа |
+|---|---|---|
+| `success(message)` | `success` | 3000мс |
+| `info(message)` | `info` | 3000мс |
+| `warn(message)` | `warn` | 4000мс |
+| `error(message)` | `error` | 5000мс |
+| `add(type, message, life)` | любой | произвольное |
+
+Ref `notifications` общий для всех вызовов `useNotify()` — его можно читать в любом месте приложения.
 
 ### useHttpClient
 
@@ -198,34 +244,29 @@ const { load: loadMore } = useDataLoad((p) => http.get('/users', { params: p }),
 
 Возвращаемый `meta` содержит `total` — удобно для пагинации.
 
-## TypeScript
+### useFormElements
 
-Все экспорты полностью типизированы. Интерфейс `Notification` доступен для импорта:
+Вспомогательный composable для форм. Используется внутри компонента `Input`, но доступен отдельно.
 
 ```ts
-import type { Notification, HttpResponse, UseHttpOptions, ErrorsData } from 'cetera-vue-utils'
+import { useFormElements } from 'cetera-vue-utils'
+
+const { isInvalid, isHelper, uuid } = useFormElements(props)
 ```
 
+## TypeScript
+
+Все экспорты полностью типизированы:
+
 ```ts
-interface Notification {
-  id: number
-  type: 'success' | 'error' | 'warn' | 'info'
-  message: string
-}
-
-interface HttpResponse<T> {
-  message?: string
-  status?: string
-  errors?: Record<string, string | string[]>
-  data?: T
-  meta?: { total?: number }
-  cancelled?: boolean
-}
-
-interface UseHttpOptions {
-  baseURL: string
-  onUnauthorized?: () => void
-}
+import type {
+  Notification,
+  HttpResponse,
+  UseHttpOptions,
+  ErrorsData,
+  InputProps,
+  SpinnerSize,
+} from 'cetera-vue-utils'
 ```
 
 ## Лицензия

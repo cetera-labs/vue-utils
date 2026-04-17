@@ -20,12 +20,13 @@ export default defineConfig({
     rollupOptions: {
       external: ['vue', 'axios', 'primevue', /^primevue\//, /^@primevue\//, 'uuid'],
       output: {
-        globals: {
-          vue: 'Vue',
-          axios: 'axios',
-          primevue: 'primevue',
-          '@primevue/icons/spinner': '_primevue_icons_spinner',
-          uuid: 'uuid',
+        globals: (id) => {
+          if (id === 'vue') return 'Vue'
+          if (id === 'axios') return 'axios'
+          if (id === 'uuid') return 'uuid'
+          if (id.startsWith('primevue')) return id.replace(/\//g, '_')
+          if (id.startsWith('@primevue')) return id.replace(/[@/]/g, '_')
+          return id
         },
       },
     },
