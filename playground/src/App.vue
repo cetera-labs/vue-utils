@@ -77,6 +77,57 @@
       </ConfirmAction>
       <p v-if="confirmedId" class="mt-3 text-sm text-gray-500">Подтверждено ID: {{ confirmedId }}</p>
     </section>
+
+    <section class="bg-white rounded-xl shadow p-6 mb-6">
+      <h2 class="text-lg font-semibold text-gray-700 mb-4">Checkbox / Radiobutton / Toggle</h2>
+      <div class="flex flex-col gap-3">
+        <Checkbox v-model="checkboxVal" label="Обычный чекбокс" />
+        <Checkbox v-model="checkboxVal" label="Indeterminate" :indeterminate="true" />
+        <div class="flex gap-4">
+          <Radiobutton v-model="radioVal" label="Вариант A" value="a" name="demo" />
+          <Radiobutton v-model="radioVal" label="Вариант B" value="b" name="demo" />
+        </div>
+        <Toggle v-model="toggleVal" label="Toggle (top)" />
+        <Toggle v-model="toggleVal" label="Toggle (right)" labelPosition="right" />
+        <p class="text-sm text-gray-400">checkbox: {{ checkboxVal }} | radio: {{ radioVal }} | toggle: {{ toggleVal }}</p>
+      </div>
+    </section>
+
+    <section class="bg-white rounded-xl shadow p-6 mb-6">
+      <h2 class="text-lg font-semibold text-gray-700 mb-4">Select / MultiSelect</h2>
+      <div class="flex flex-col gap-4 max-w-sm">
+        <Select v-model="selectVal" label="Статус" :options="statusOptions" />
+        <MultiSelect v-model="multiVal" label="Теги" :options="tagOptions" selectedFirst />
+        <p class="text-sm text-gray-400">select: {{ selectVal }} | multi: {{ multiVal }}</p>
+      </div>
+    </section>
+
+    <section class="bg-white rounded-xl shadow p-6 mb-6">
+      <h2 class="text-lg font-semibold text-gray-700 mb-4">Slider / Textarea</h2>
+      <div class="flex flex-col gap-4 max-w-sm">
+        <Slider v-model="sliderVal" label="Значение" />
+        <Textarea v-model="textareaVal" label="Комментарий" rows="3" autoResize />
+        <p class="text-sm text-gray-400">slider: {{ sliderVal }}</p>
+      </div>
+    </section>
+
+    <section class="bg-white rounded-xl shadow p-6 mb-6">
+      <h2 class="text-lg font-semibold text-gray-700 mb-4">InputDate / InputTime / InputNumber</h2>
+      <div class="flex flex-col gap-4 max-w-sm">
+        <InputDate v-model="dateVal" label="Дата" />
+        <InputTime v-model="timeVal" label="Время" />
+        <InputNumber v-model="numberVal" label="Количество" />
+        <p class="text-sm text-gray-400">date: {{ dateVal }} | time: {{ timeVal }} | number: {{ numberVal }}</p>
+      </div>
+    </section>
+
+    <section class="bg-white rounded-xl shadow p-6 mb-6">
+      <h2 class="text-lg font-semibold text-gray-700 mb-4">InputSearch</h2>
+      <div class="max-w-sm">
+        <InputSearch v-model="searchVal" :loading="searchLoading" placeholder="Поиск..." />
+        <p class="mt-2 text-sm text-gray-400">query: {{ searchVal }}</p>
+      </div>
+    </section>
   </div>
 
   <Notifications />
@@ -84,19 +135,61 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Notifications, Spinner, InlineLoading, Button, ButtonLink, Dialog, ConfirmAction, useNotify } from 'cetera-vue-utils'
+import {
+  Notifications, Spinner, InlineLoading,
+  Button, ButtonLink, Dialog, ConfirmAction,
+  Checkbox, Radiobutton, Toggle,
+  Select, MultiSelect, Slider, Textarea,
+  InputDate, InputTime, InputNumber, InputSearch,
+  useNotify,
+} from 'cetera-vue-utils'
 import type { SpinnerSize } from 'cetera-vue-utils'
 
 const notify = useNotify()
+
+// Spinner
 const spinnerVisible = ref(true)
 const sizes: SpinnerSize[] = ['xs', 'sm', 'base', 'lg', 'xl']
 
+// Dialog
 const dialogVisible = ref(false)
 
+// ConfirmAction
 const confirmRef = ref<InstanceType<typeof ConfirmAction>>()
 const confirmedId = ref<any>(null)
 const onConfirm = (id: any) => {
   confirmedId.value = id
   notify.success(`Запись #${id} удалена`)
 }
+
+// Checkbox / Radio / Toggle
+const checkboxVal = ref(false)
+const radioVal = ref('a')
+const toggleVal = ref(false)
+
+// Select / MultiSelect
+const statusOptions = [
+  { name: 'Активный', value: 'active' },
+  { name: 'Архив', value: 'archived' },
+]
+const tagOptions = [
+  { name: 'Vue', value: 'vue' },
+  { name: 'TypeScript', value: 'ts' },
+  { name: 'Tailwind', value: 'tw' },
+]
+const selectVal = ref<string | null>(null)
+const multiVal = ref<string[]>([])
+
+// Slider / Textarea
+const sliderVal = ref(50)
+const textareaVal = ref('')
+
+// InputDate / InputTime / InputNumber
+const dateVal = ref<string | null>(null)
+const timeVal = ref<string | null>(null)
+const numberVal = ref<number | null>(null)
+
+// InputSearch
+const searchVal = ref('')
+const searchLoading = ref(false)
 </script>

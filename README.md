@@ -13,6 +13,17 @@
 - [Dialog](#dialog)
 - [ConfirmAction](#confirmaction)
 - [Input](#input)
+- [Checkbox](#checkbox)
+- [Radiobutton](#radiobutton)
+- [Toggle](#toggle)
+- [Select](#select)
+- [MultiSelect](#multiselect)
+- [Slider](#slider)
+- [Textarea](#textarea)
+- [InputDate](#inputdate)
+- [InputTime](#inputtime)
+- [InputNumber](#inputnumber)
+- [InputSearch](#inputsearch)
 
 **Composables**
 - [useNotify](#usenotify)
@@ -230,6 +241,223 @@ import { DatePicker } from 'primevue'
 | `invalidMessage` | `string` | — | Текст ошибки |
 | `helperText` | `string` | — | Вспомогательный текст |
 | `id` | `string` | auto uuid | ID для связи label и input |
+
+### Checkbox
+
+Чекбокс с label. Поддерживает indeterminate состояние.
+
+```vue
+<template>
+  <Checkbox v-model="checked" label="Согласен с условиями" />
+  <Checkbox v-model="value" label="Опция" :value="'option1'" name="group" />
+  <Checkbox v-model="checked" label="Частично" :indeterminate="true" />
+</template>
+
+<script setup>
+import { Checkbox } from 'cetera-vue-utils'
+</script>
+```
+
+| Prop | Тип | Описание |
+|---|---|---|
+| `label` | `string` | Текст рядом с чекбоксом |
+| `value` | `boolean \| string \| number` | Значение в группе |
+| `name` | `string` | Имя группы |
+| `disabled` | `boolean` | Заблокировать |
+| `indeterminate` | `boolean` | Промежуточное состояние |
+
+### Radiobutton
+
+Радиокнопка с label.
+
+```vue
+<template>
+  <Radiobutton v-model="selected" label="Вариант 1" value="a" name="group" />
+  <Radiobutton v-model="selected" label="Вариант 2" value="b" name="group" />
+</template>
+
+<script setup>
+import { Radiobutton } from 'cetera-vue-utils'
+</script>
+```
+
+| Prop | Тип | Описание |
+|---|---|---|
+| `label` | `string` | Текст рядом с кнопкой |
+| `value` | `string \| number` | Значение этой кнопки |
+| `name` | `string` | Имя группы |
+| `disabled` | `boolean` | Заблокировать |
+
+### Toggle
+
+Переключатель (toggle switch) с label.
+
+```vue
+<template>
+  <Toggle v-model="enabled" label="Включить уведомления" />
+  <Toggle v-model="enabled" label="Активно" labelPosition="right" />
+</template>
+
+<script setup>
+import { Toggle } from 'cetera-vue-utils'
+</script>
+```
+
+| Prop | Тип | По умолчанию | Описание |
+|---|---|---|---|
+| `label` | `string` | — | Текст |
+| `labelPosition` | `'top' \| 'right'` | `'top'` | Позиция label |
+| `disabled` | `boolean` | — | Заблокировать |
+
+### Select
+
+Выпадающий список. Обёртка над `Input` с PrimeVue `Select`.
+
+```vue
+<template>
+  <Select v-model="selected" label="Статус" :options="statuses" />
+</template>
+
+<script setup>
+import { Select } from 'cetera-vue-utils'
+
+const statuses = [
+  { name: 'Активный', value: 'active' },
+  { name: 'Архив', value: 'archived' },
+]
+</script>
+```
+
+| Prop | Тип | По умолчанию | Описание |
+|---|---|---|---|
+| `optionLabel` | `string` | `'name'` | Поле для отображения |
+| `optionValue` | `string` | `'value'` | Поле для значения |
+
+Все props `Input` (label, invalidMessage, helperText) и attrs PrimeVue `Select` передаются дальше.
+
+### MultiSelect
+
+Множественный выбор. Обёртка над `Input` с PrimeVue `MultiSelect`.
+
+```vue
+<template>
+  <MultiSelect v-model="selected" label="Теги" :options="tags" selectedFirst />
+</template>
+
+<script setup>
+import { MultiSelect } from 'cetera-vue-utils'
+</script>
+```
+
+| Prop | Тип | По умолчанию | Описание |
+|---|---|---|---|
+| `options` | `any[]` | — | Список вариантов |
+| `optionLabel` | `string` | `'name'` | Поле для отображения |
+| `optionValue` | `string` | `'value'` | Поле для значения |
+| `selectedFirst` | `boolean` | — | Выбранные показываются первыми |
+
+### Slider
+
+Слайдер. Обёртка над `Input` с PrimeVue `Slider`.
+
+```vue
+<template>
+  <Slider v-model="value" label="Громкость" :min="0" :max="100" />
+  <Slider v-model="range" label="Диапазон" range />
+</template>
+
+<script setup>
+import { Slider } from 'cetera-vue-utils'
+</script>
+```
+
+Все props `Input` и attrs PrimeVue `Slider` передаются дальше.
+
+### Textarea
+
+Многострочное поле ввода. Обёртка над `Input` с PrimeVue `Textarea`.
+
+```vue
+<template>
+  <Textarea v-model="text" label="Комментарий" rows="4" autoResize />
+</template>
+
+<script setup>
+import { Textarea } from 'cetera-vue-utils'
+</script>
+```
+
+Все props `Input` и attrs PrimeVue `Textarea` передаются дальше.
+
+### InputDate
+
+Поле выбора даты. Хранит значение в формате `yyyy-MM-dd` (строка).
+
+```vue
+<template>
+  <InputDate v-model="date" label="Дата рождения" />
+</template>
+
+<script setup>
+import { InputDate } from 'cetera-vue-utils'
+
+const date = ref<string | null>(null) // '2024-01-15'
+</script>
+```
+
+Требует `date-fns` (входит в зависимости пакета).
+
+### InputTime
+
+Поле выбора времени. Хранит значение в формате `HH:mm` (строка).
+
+```vue
+<template>
+  <InputTime v-model="time" label="Время начала" />
+</template>
+
+<script setup>
+import { InputTime } from 'cetera-vue-utils'
+
+const time = ref<string | null>(null) // '14:30'
+</script>
+```
+
+### InputNumber
+
+Числовое поле ввода. Обёртка над `Input` с PrimeVue `InputNumber`.
+
+```vue
+<template>
+  <InputNumber v-model="amount" label="Сумма" :minFractionDigits="2" mode="currency" currency="RUB" />
+</template>
+
+<script setup>
+import { InputNumber } from 'cetera-vue-utils'
+</script>
+```
+
+Все props `Input` и attrs PrimeVue `InputNumber` передаются дальше.
+
+### InputSearch
+
+Поле поиска с иконкой, кнопкой очистки и debounce. Требует `@heroicons/vue` и `@vueuse/core`.
+
+```vue
+<template>
+  <InputSearch v-model="query" :debounce="500" :loading="isSearching" placeholder="Поиск..." />
+</template>
+
+<script setup>
+import { InputSearch } from 'cetera-vue-utils'
+</script>
+```
+
+| Prop | Тип | По умолчанию | Описание |
+|---|---|---|---|
+| `modelValue` | `string` | `''` | Значение поиска |
+| `debounce` | `number` | `800` | Задержка перед emit (мс) |
+| `loading` | `boolean` | `false` | Показывает спиннер вместо крестика |
 
 ## Composables
 
