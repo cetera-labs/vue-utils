@@ -110,35 +110,45 @@ import { InlineLoading } from 'cetera-vue-utils'
 
 ### Button
 
-Обёртка над `Button` из PrimeVue с поддержкой состояния загрузки и иконок.
+Кнопка с поддержкой вариантов стиля, размеров и состояния загрузки.
 
 ```vue
 <template>
   <Button label="Сохранить" @click="save" />
-  <Button label="Сохранение..." :loading="true" />
+  <Button label="Загрузка" :loading="true" />
+  <Button label="Secondary" severity="secondary" />
   <Button label="Удалить" severity="danger" :icon="TrashIcon" />
+  <Button label="Outlined" outlined />
+  <Button label="Маленькая" size="sm" />
+  <Button label="Большая" size="lg" />
 </template>
 
 <script setup>
 import { Button } from 'cetera-vue-utils'
+import { TrashIcon } from '@heroicons/vue/24/outline'
 </script>
 ```
 
-| Prop | Тип | Описание |
-|---|---|---|
-| `loading` | `boolean` | Показывает спиннер, блокирует кнопку |
-| `icon` | `FunctionalComponent` | Иконка (когда нет `loading`) |
+| Prop | Тип | По умолчанию | Описание |
+|---|---|---|---|
+| `label` | `string` | — | Текст кнопки |
+| `severity` | `'primary' \| 'secondary' \| 'danger'` | `'primary'` | Вариант цвета |
+| `outlined` | `boolean` | `false` | Контурный стиль (прозрачный фон) |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Размер кнопки |
+| `loading` | `boolean` | `false` | Спиннер + блокировка |
+| `icon` | `FunctionalComponent` | — | Иконка (не отображается при `loading`) |
 
-Все остальные props и attrs передаются в PrimeVue `Button`.
+Все остальные attrs (например `type`, `disabled`) передаются в `<button>`.
 
 ### ButtonLink
 
-Кнопка в виде ссылки (`<a>`), стилизованная через PrimeVue Button.
+Кнопка в виде ссылки (`<a>`) с теми же вариантами стиля.
 
 ```vue
 <template>
   <ButtonLink href="/dashboard">На главную</ButtonLink>
-  <ButtonLink href="https://example.com" target="_blank">Внешняя ссылка</ButtonLink>
+  <ButtonLink href="https://example.com" target="_blank" severity="secondary">Внешняя ссылка</ButtonLink>
+  <ButtonLink href="/docs" outlined size="sm">Документация</ButtonLink>
 </template>
 
 <script setup>
@@ -146,19 +156,28 @@ import { ButtonLink } from 'cetera-vue-utils'
 </script>
 ```
 
-Все attrs (href, target, rel и др.) передаются в тег `<a>`.
+| Prop | Тип | По умолчанию | Описание |
+|---|---|---|---|
+| `label` | `string` | — | Текст (альтернатива слоту) |
+| `severity` | `'primary' \| 'secondary' \| 'danger'` | `'primary'` | Вариант цвета |
+| `outlined` | `boolean` | `false` | Контурный стиль |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Размер |
+| `icon` | `FunctionalComponent` | — | Иконка |
+
+Все attrs (href, target, rel и др.) передаются в `<a>`.
 
 ### Dialog
 
-Обёртка над `Dialog` из PrimeVue с поддержкой слотов `default` и `footer`.
+Модальный диалог на основе `@headlessui/vue` с анимацией и backdrop.
 
 ```vue
 <template>
   <Button label="Открыть" @click="visible = true" />
   <Dialog v-model:visible="visible" header="Заголовок">
-    <p>Содержимое</p>
+    <p>Содержимое диалога</p>
     <template #footer>
-      <Button label="Закрыть" severity="secondary" @click="visible = false" />
+      <Button label="Отмена" severity="secondary" @click="visible = false" />
+      <Button label="Сохранить" @click="save" />
     </template>
   </Dialog>
 </template>
@@ -171,12 +190,33 @@ const visible = ref(false)
 </script>
 ```
 
+Кастомный заголовок через слот:
+
+```vue
+<Dialog v-model:visible="visible">
+  <template #header>
+    <h2 class="text-xl font-bold text-red-600">Внимание!</h2>
+  </template>
+  Содержимое
+</Dialog>
+```
+
 | Prop | Тип | Описание |
 |---|---|---|
 | `visible` (v-model) | `boolean` | Видимость диалога |
-| `header` | `string` | Заголовок |
+| `header` | `string` | Заголовок (альтернатива слоту `#header`) |
 
-Все остальные attrs передаются в PrimeVue `Dialog`.
+| Слот | Описание |
+|---|---|
+| `default` | Содержимое диалога |
+| `header` | Кастомный заголовок (заменяет prop `header`) |
+| `footer` | Кнопки действий (выравнивание по правому краю) |
+
+Attrs (например `class`) передаются в `DialogPanel` — можно переопределить ширину:
+
+```vue
+<Dialog v-model:visible="visible" header="Широкий" class="max-w-3xl">...</Dialog>
+```
 
 ### ConfirmAction
 

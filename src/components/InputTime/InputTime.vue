@@ -1,35 +1,25 @@
 <template>
-    <Input
-        v-model="internalValue"
-        :component="DatePicker"
-        time-only
-        show-clear
-        v-bind="$attrs"
-    />
+    <Input v-bind="$attrs">
+        <InputText
+            type="time"
+            :value="modelValue ?? ''"
+            fluid
+            v-bind="$attrs"
+            @change="onChange"
+        />
+    </Input>
 </template>
+
 <script setup lang="ts">
-import { computed } from "vue"
-import { DatePicker } from "primevue"
-import { format, parse } from "date-fns"
-import Input from "../Input/Input.vue"
+import Input from '../Input/Input.vue'
+import InputText from '../InputText/InputText.vue'
 
 defineOptions({ inheritAttrs: false })
 
 const modelValue = defineModel<string | null>()
 
-const internalValue = computed({
-    get: () => {
-        if (modelValue.value) {
-            try {
-                return parse(modelValue.value, "HH:mm", new Date())
-            } catch {
-                return null
-            }
-        }
-        return null
-    },
-    set: (val) => {
-        modelValue.value = val instanceof Date ? format(val, "HH:mm") : null
-    },
-})
+const onChange = (e: Event) => {
+    const val = (e.target as HTMLInputElement).value
+    modelValue.value = val || null
+}
 </script>

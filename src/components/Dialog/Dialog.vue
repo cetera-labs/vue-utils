@@ -23,7 +23,7 @@
                     leave-from="opacity-100 scale-100"
                     leave-to="opacity-0 scale-95"
                 >
-                    <DialogPanel class="w-full max-w-lg rounded-xl bg-white shadow-xl">
+                    <DialogPanel class="rounded-xl bg-white shadow-xl" v-bind="$attrs">
                         <div class="flex items-center justify-between p-4 border-b border-gray-200">
                             <slot name="header">
                                 <DialogTitle v-if="header" class="text-lg font-semibold text-gray-800">
@@ -54,6 +54,7 @@
 </template>
 
 <script setup lang="ts">
+defineOptions({ inheritAttrs: false })
 import {
     Dialog as HDialog,
     DialogPanel,

@@ -1,12 +1,25 @@
 <template>
-    <Input v-model="modelValue" :component="PrimeInputNumber" v-bind="$attrs" />
+    <Input v-model="modelValue" v-bind="$attrs">
+        <InputText
+            type="number"
+            :value="modelValue ?? ''"
+            fluid
+            v-bind="$attrs"
+            @input="onInput"
+        />
+    </Input>
 </template>
 
 <script setup lang="ts">
-import { InputNumber as PrimeInputNumber } from "primevue"
-import Input from "../Input/Input.vue"
+import Input from '../Input/Input.vue'
+import InputText from '../InputText/InputText.vue'
 
 defineOptions({ inheritAttrs: false })
 
 const modelValue = defineModel<number | null>()
+
+const onInput = (e: Event) => {
+    const val = (e.target as HTMLInputElement).value
+    modelValue.value = val === '' ? null : Number(val)
+}
 </script>

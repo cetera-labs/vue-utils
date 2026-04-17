@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue"
-import { InputText } from "primevue"
+import InputText from "../InputText/InputText.vue"
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/vue/24/outline"
 import { useDebounceFn } from "@vueuse/core"
 

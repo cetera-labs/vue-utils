@@ -8,22 +8,18 @@
                 </template>
             </Component>
         </slot>
-        <Message v-if="isInvalid" size="small" severity="error" variant="simple">
-            <slot name="invalid-message">
-                {{ invalidMessage }}
-            </slot>
-        </Message>
-        <Message v-if="isHelper" size="small" severity="secondary" variant="simple">
-            <slot name="helper-text">
-                {{ helperText }}
-            </slot>
-        </Message>
+        <p v-if="isInvalid" class="mt-1 text-xs text-red-600">
+            <slot name="invalid-message">{{ invalidMessage }}</slot>
+        </p>
+        <p v-if="isHelper" class="mt-1 text-xs text-gray-400">
+            <slot name="helper-text">{{ helperText }}</slot>
+        </p>
     </div>
 </template>
 
 <script setup lang="ts">
 import { computed, useAttrs } from "vue"
-import { InputText, Message } from "primevue"
+import InputText from "../InputText/InputText.vue"
 import { useFormElements } from "../../composables"
 import type { InputProps } from "./types"
 
