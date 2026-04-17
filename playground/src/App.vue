@@ -13,6 +13,8 @@
         <DemoSpinner />
         <DemoFormControls />
         <DemoDateInputs />
+        <DemoPopover />
+        <DemoPagination />
         <DemoDataTable />
       </div>
     </div>
@@ -31,4 +33,6 @@ import DemoInput from './demos/DemoInput.vue'
 import DemoFormControls from './demos/DemoFormControls.vue'
 import DemoDateInputs from './demos/DemoDateInputs.vue'
 import DemoDataTable from './demos/DemoDataTable.vue'
+import DemoPopover from './demos/DemoPopover.vue'
+import DemoPagination from './demos/DemoPagination.vue'
 </script>

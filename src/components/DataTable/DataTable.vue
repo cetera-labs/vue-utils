@@ -53,12 +53,12 @@ defineProps<{
     stickyHeader?: boolean
 }>()
 
-const slots = useSlots()
+const slots = useSlots() as { default?: () => any[] }
 
 const columns = computed(() => {
     return (slots.default?.() ?? [])
-        .filter(vnode => vnode.type === Column)
-        .map(vnode => ({
+        .filter((vnode: any) => vnode.type === Column)
+        .map((vnode: any) => ({
             field: vnode.props?.field as string | undefined,
             header: vnode.props?.header as string | undefined,
             bodySlot: (vnode.children as any)?.body as ((scope: { data: any }) => any) | undefined,

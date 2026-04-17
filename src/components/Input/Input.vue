@@ -3,7 +3,7 @@
         <label v-if="label" :for="uuid" v-html="label" />
         <slot>
             <Component :is="component" :id="uuid" v-bind="attrsRest" v-model="modelValue" fluid>
-                <template v-for="name in Object.keys($slots)" :key="name" #[name]="slotProps">
+                <template v-for="name in (Object.keys($slots) as string[])" :key="name" #[name]="slotProps">
                     <slot :name="name" v-bind="slotProps ?? {}" />
                 </template>
             </Component>

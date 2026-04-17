@@ -24,6 +24,9 @@
 - [InputTime](#inputtime)
 - [InputNumber](#inputnumber)
 - [InputSearch](#inputsearch)
+- [DataTable](#datatable)
+- [Pagination](#pagination)
+- [Popover](#popover)
 
 **Composables**
 - [useNotify](#usenotify)
@@ -498,6 +501,75 @@ import { InputSearch } from 'cetera-vue-utils'
 | `modelValue` | `string` | `''` | Значение поиска |
 | `debounce` | `number` | `800` | Задержка перед emit (мс) |
 | `loading` | `boolean` | `false` | Показывает спиннер вместо крестика |
+
+### Pagination
+
+Компонент постраничной навигации с выбором количества строк.
+
+```vue
+<template>
+  <Pagination
+    :total-records="243"
+    :limit="limit"
+    :offset="offset"
+    @refresh="onRefresh"
+  />
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import { Pagination } from 'cetera-vue-utils'
+
+const limit = ref(20)
+const offset = ref(0)
+
+const onRefresh = ({ limit: l, offset: o }) => {
+  if (l !== undefined) limit.value = l
+  if (o !== undefined) offset.value = o
+}
+</script>
+```
+
+| Prop | Тип | По умолчанию | Описание |
+|---|---|---|---|
+| `totalRecords` | `number` | `0` | Общее количество записей |
+| `limit` | `number` | — | Записей на странице |
+| `offset` | `number` | — | Текущее смещение |
+| `limitOptions` | `number[]` | `[20, 50, 100]` | Варианты для выбора количества строк |
+
+Событие `@refresh` передаёт объект `{ limit, offset }` при смене страницы или количества строк.
+
+### Popover
+
+Всплывающая панель с позиционированием. Управление состоянием через `@headlessui/vue`.
+
+```vue
+<template>
+  <Popover>
+    <template #trigger>
+      <Button label="Открыть" outlined />
+    </template>
+    <div class="p-3">
+      <p>Содержимое поповера</p>
+    </div>
+  </Popover>
+</template>
+
+<script setup>
+import { Popover, Button } from 'cetera-vue-utils'
+</script>
+```
+
+| Prop | Тип | По умолчанию | Описание |
+|---|---|---|---|
+| `placement` | `'bottom-start' \| 'bottom-end' \| 'bottom' \| 'top-start' \| 'top-end' \| 'top'` | `'bottom-start'` | Позиция панели |
+
+| Слот | Описание |
+|---|---|
+| `#trigger` | Элемент-триггер |
+| `default` | Содержимое панели |
+
+Закрывается по `Escape`, клику вне панели — поведение headlessui.
 
 ## Composables
 
