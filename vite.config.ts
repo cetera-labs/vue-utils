@@ -3,7 +3,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import dts from 'vite-plugin-dts'
 
-const external = ['vue', 'axios', 'primevue', /^primevue\//, /^@primevue\//, 'uuid', 'date-fns', /^date-fns\//, '@vueuse/core', /^@heroicons\//]
+const external = ['vue', 'axios', 'primevue', /^primevue\//, /^@primevue\//, 'uuid', 'date-fns', /^date-fns\//, '@vueuse/core', /^@heroicons\//, '@headlessui/vue']
 
 const globals = (id: string): string => {
   if (id === 'vue') return 'Vue'
