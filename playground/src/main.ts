@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import PrimeVue from 'primevue/config'
 import App from './App.vue'
 import './style.css'
+import '@vuepic/vue-datepicker/dist/main.css'
 
 createApp(App)
     .use(PrimeVue, { unstyled: true })

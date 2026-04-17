@@ -3,7 +3,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import dts from 'vite-plugin-dts'
 
-const external = ['vue', 'axios', 'primevue', /^primevue\//, /^@primevue\//, 'uuid', 'date-fns', /^date-fns\//, '@vueuse/core', /^@heroicons\//, '@headlessui/vue']
+const external = ['vue', 'axios', 'primevue', /^primevue\//, /^@primevue\//, 'uuid', 'date-fns', /^date-fns\//, '@vueuse/core', /^@heroicons\//, '@headlessui/vue', '@vuepic/vue-datepicker']
 
 const globals = (id: string): string => {
   if (id === 'vue') return 'Vue'
@@ -14,6 +14,7 @@ const globals = (id: string): string => {
   if (id.startsWith('date-fns')) return id.replace(/\//g, '_')
   if (id.startsWith('@heroicons')) return id.replace(/[@/]/g, '_')
   if (id === '@vueuse/core') return '_vueuse_core'
+  if (id === '@vuepic/vue-datepicker') return '_vuepic_vue_datepicker'
   return id
 }
 

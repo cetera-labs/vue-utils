@@ -2,14 +2,20 @@
   <div class="min-h-screen bg-gray-100 p-8">
     <h1 class="text-2xl font-bold text-gray-800 mb-8">cetera-vue-utils playground</h1>
 
-    <DemoNotify />
-    <DemoSpinner />
-    <DemoButton />
-    <DemoDialog />
-    <DemoInput />
-    <DemoFormControls />
-    <DemoDateInputs />
-    <DemoDataTable />
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+      <div>
+        <DemoNotify />
+        <DemoButton />
+        <DemoDialog />
+        <DemoInput />
+      </div>
+      <div>
+        <DemoSpinner />
+        <DemoFormControls />
+        <DemoDateInputs />
+        <DemoDataTable />
+      </div>
+    </div>
   </div>
 
   <Notifications />

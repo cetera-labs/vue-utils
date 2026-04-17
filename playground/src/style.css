@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @import "tailwindcss-primeui";
 @source "../../src";
-@source "./volt";
 
 @theme {
     --color-primary-50: oklch(97% 0.014 254);
