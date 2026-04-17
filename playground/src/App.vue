@@ -84,8 +84,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Notifications, Spinner, InlineLoading, Button, ButtonLink, Dialog, ConfirmAction, useNotify } from 'cetera-vue-utils'
+import { Notifications, Spinner, InlineLoading, ButtonLink, ConfirmAction, useNotify } from 'cetera-vue-utils'
 import type { SpinnerSize } from 'cetera-vue-utils'
+import Button from './volt/Button.vue'
+import Dialog from './volt/Dialog.vue'
 
 const notify = useNotify()
 const spinnerVisible = ref(true)
