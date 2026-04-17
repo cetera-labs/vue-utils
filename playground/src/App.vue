@@ -37,7 +37,7 @@
           <input type="checkbox" v-model="spinnerVisible" />
           isLoading
         </label>
-        <div class="relative h-24 mt-2 bg-gray-50 rounded-lg border">
+        <div class="relative h-24 mt-2 bg-gray-100 rounded-lg">
           <Spinner :isLoading="spinnerVisible" size="lg" />
           <p class="p-4 text-gray-400 text-sm">Контент за спиннером</p>
         </div>
