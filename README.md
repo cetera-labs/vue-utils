@@ -8,6 +8,10 @@
 - [Notifications](#notifications)
 - [Spinner](#spinner)
 - [InlineLoading](#inlineloading)
+- [Button](#button)
+- [ButtonLink](#buttonlink)
+- [Dialog](#dialog)
+- [ConfirmAction](#confirmaction)
 - [Input](#input)
 
 **Composables**
@@ -92,6 +96,111 @@ import { InlineLoading } from 'cetera-vue-utils'
 |---|---|---|---|
 | `isLoading` | `boolean` | `true` | Показывать индикатор |
 | `loadingText` | `string` | `'Загрузка ...'` | Текст рядом с иконкой |
+
+### Button
+
+Обёртка над `Button` из PrimeVue с поддержкой состояния загрузки и иконок.
+
+```vue
+<template>
+  <Button label="Сохранить" @click="save" />
+  <Button label="Сохранение..." :loading="true" />
+  <Button label="Удалить" severity="danger" :icon="TrashIcon" />
+</template>
+
+<script setup>
+import { Button } from 'cetera-vue-utils'
+</script>
+```
+
+| Prop | Тип | Описание |
+|---|---|---|
+| `loading` | `boolean` | Показывает спиннер, блокирует кнопку |
+| `icon` | `FunctionalComponent` | Иконка (когда нет `loading`) |
+
+Все остальные props и attrs передаются в PrimeVue `Button`.
+
+### ButtonLink
+
+Кнопка в виде ссылки (`<a>`), стилизованная через PrimeVue Button.
+
+```vue
+<template>
+  <ButtonLink href="/dashboard">На главную</ButtonLink>
+  <ButtonLink href="https://example.com" target="_blank">Внешняя ссылка</ButtonLink>
+</template>
+
+<script setup>
+import { ButtonLink } from 'cetera-vue-utils'
+</script>
+```
+
+Все attrs (href, target, rel и др.) передаются в тег `<a>`.
+
+### Dialog
+
+Обёртка над `Dialog` из PrimeVue с поддержкой слотов `default` и `footer`.
+
+```vue
+<template>
+  <Button label="Открыть" @click="visible = true" />
+  <Dialog v-model:visible="visible" header="Заголовок">
+    <p>Содержимое</p>
+    <template #footer>
+      <Button label="Закрыть" severity="secondary" @click="visible = false" />
+    </template>
+  </Dialog>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import { Dialog, Button } from 'cetera-vue-utils'
+
+const visible = ref(false)
+</script>
+```
+
+| Prop | Тип | Описание |
+|---|---|---|
+| `visible` (v-model) | `boolean` | Видимость диалога |
+| `header` | `string` | Заголовок |
+
+Все остальные attrs передаются в PrimeVue `Dialog`.
+
+### ConfirmAction
+
+Диалог подтверждения действия. Управляется через `ref` и метод `confirm(id)`.
+
+```vue
+<template>
+  <Button label="Удалить" severity="danger" @click="confirmRef?.confirm(item.id)" />
+  <ConfirmAction ref="confirmRef" danger @confirm="onDelete">
+    Вы уверены, что хотите удалить запись?
+  </ConfirmAction>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import { ConfirmAction, Button } from 'cetera-vue-utils'
+
+const confirmRef = ref()
+const onDelete = (id) => {
+  // удалить запись с id
+}
+</script>
+```
+
+| Prop | Тип | Описание |
+|---|---|---|
+| `danger` | `boolean` | Кнопка "Да" в красном цвете |
+
+| Event | Payload | Описание |
+|---|---|---|
+| `confirm` | `id: any` | Срабатывает после подтверждения |
+
+| Метод | Описание |
+|---|---|
+| `confirm(id)` | Открывает диалог, сохраняет `id` для передачи в событие |
 
 ### Input
 
