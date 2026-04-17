@@ -9,5 +9,11 @@ export default defineConfig({
     alias: {
       'cetera-vue-utils': resolve(__dirname, '../src/index.ts'),
     },
+    dedupe: ['vue', 'primevue'],
+  },
+  server: {
+    fs: {
+      allow: ['..'],
+    },
   },
 })
